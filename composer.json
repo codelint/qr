@@ -36,13 +36,9 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app",
-            "Sample\\": "modules/sample/src/",
             "Qr\\": "modules/qr/src/"
         },
         "classmap": [
-            "database/seeds",
-            "database/factories"
         ]
     },
     "autoload-dev": {
