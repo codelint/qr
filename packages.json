@@ -1,0 +1,15 @@
+{
+    "packages": {
+        "codelint/qr": {
+            "dev-master": {
+                "name": "codelint/qr",
+                "version": "dev-master",
+                "source": {
+                    "type": "git",
+                    "url": "https://github.com/codelint/qr.git",
+                    "reference": "0ce2ea37d6b658e99db5a2e7f634004d48081579"
+                }
+            }
+        }
+    }
+}
