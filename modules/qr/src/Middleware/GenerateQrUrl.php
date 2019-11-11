@@ -21,7 +21,7 @@ class GenerateQrUrl {
         $get = request()->all();
         $domain = Arr::get($get, '__domain', $_SERVER['HTTP_HOST']);
         $get = Arr::except($get, '__domain');
-        $size = Arr::get($get, 'qr_size', 8);
+        $size = Arr::get($get, 'qr_size', 300);
         $url = substr($url, 3);
         $url = Str::startsWith($url, '/') ? $url : "/$url";
         $url = explode('?', $url);
@@ -42,7 +42,7 @@ class GenerateQrUrl {
         // $qrCode->setLabel('Scan the code', 16, __DIR__ . '/../assets/fonts/noto_sans.otf', LabelAlignment::CENTER());
         // $qrCode->setLogoPath(__DIR__.'/../assets/images/symfony.png');
         // $qrCode->setLogoPath()
-        $qrCode->setLogoSize(150, 200);
+        // $qrCode->setLogoSize(150, 200);
         $qrCode->setRoundBlockSize(true);
         $qrCode->setValidateResult(false);
         $qrCode->setWriterOptions(['exclude_xml_declaration' => true]);

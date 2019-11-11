@@ -1,4 +1,4 @@
-<?php namespace Sample;
+<?php namespace Qr;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
@@ -41,6 +41,8 @@ class ModuleProvider extends ServiceProvider {
 
         $this->mapApiRoutes();
         $this->mapWebRoutes();
+
+        $this->app->make('router')->aliasMiddleware('tool.qr', GenerateQrUrl::class);
         // $this->commands([]);
     }
 
