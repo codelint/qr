@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Qr\Middleware\GenerateQrUrl;
 
 /**
  * ModuleProvider:
