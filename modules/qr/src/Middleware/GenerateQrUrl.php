@@ -1,7 +1,7 @@
 <?php namespace Qr\Middleware;
 
+use Closure;
 use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\LabelAlignment;
 use Endroid\QrCode\QrCode;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
