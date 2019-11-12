@@ -30,7 +30,12 @@ class GenerateQrUrl {
         $url = 'http://' . $domain . $url . '?' . http_build_query(Arr::except($get, ['qr_size']));
         //include_once(app_path('library/phpqrcode/phpqrcode.php'));
 
-        $qrCode = static::qrCode($url, $size);
+        if($logo = request()->get('logo'))
+        {
+            $logo = public_path('img/') . $logo;
+        }
+
+        $qrCode = static::qrCode($url, $size, $logo);
 
         header('Content-Type: ' . $qrCode->getContentType());
         echo $qrCode->writeString();
