@@ -44,7 +44,7 @@ class ModuleProvider extends ServiceProvider {
         $this->mapWebRoutes();
 
         $this->app->make('router')->aliasMiddleware('tool.qr', GenerateQrUrl::class);
-        // $this->commands([]);
+
     }
 
     /**

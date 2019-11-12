@@ -2,8 +2,8 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\TestCase;
+use Qr\Middleware\GenerateQrUrl;
 
 class ExampleTest extends TestCase
 {
@@ -14,8 +14,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/');
+        $op = GenerateQrUrl::qrCode('http://m.baidu.com', 400, __DIR__ . '/../../storage/result.png');
 
-        $response->assertStatus(200);
+        $op->writeFile(__DIR__ . '/../../storage/test.png');
     }
 }

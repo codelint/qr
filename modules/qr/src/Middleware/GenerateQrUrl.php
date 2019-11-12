@@ -2,6 +2,7 @@
 
 use Closure;
 use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\Exception\InvalidPathException;
 use Endroid\QrCode\QrCode;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -29,6 +30,21 @@ class GenerateQrUrl {
         $url = 'http://' . $domain . $url . '?' . http_build_query(Arr::except($get, ['qr_size']));
         //include_once(app_path('library/phpqrcode/phpqrcode.php'));
 
+        $qrCode = static::qrCode($url, $size);
+
+        header('Content-Type: ' . $qrCode->getContentType());
+        echo $qrCode->writeString();
+
+        die();
+    }
+
+    /**
+     * @param $url
+     * @param $size
+     * @return QrCode
+     */
+    static public function qrCode($url, $size = 400, $logo_path = '')
+    {
         $qrCode = new QrCode($url);
 
         $qrCode->setSize($size);
@@ -39,22 +55,25 @@ class GenerateQrUrl {
         $qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
         $qrCode->setForegroundColor(['r' => 0, 'g' => 0, 'b' => 0, 'a' => 0]);
         $qrCode->setBackgroundColor(['r' => 255, 'g' => 255, 'b' => 255, 'a' => 0]);
+
+        $logo_path = $logo_path ?: storage_path('/qr/' . md5($url));
+        if (file_exists($logo_path))
+        {
+            try
+            {
+                $qrCode->setLogoPath($logo_path);
+                $qrCode->setLogoSize(intval($size*3/10), intval($size*3/10));
+            } catch (InvalidPathException $e)
+            {
+            }
+        }
         // $qrCode->setLabel('Scan the code', 16, __DIR__ . '/../assets/fonts/noto_sans.otf', LabelAlignment::CENTER());
         // $qrCode->setLogoPath(__DIR__.'/../assets/images/symfony.png');
-        // $qrCode->setLogoPath()
         // $qrCode->setLogoSize(150, 200);
         $qrCode->setRoundBlockSize(true);
         $qrCode->setValidateResult(false);
         $qrCode->setWriterOptions(['exclude_xml_declaration' => true]);
 
-
-        header('Content-Type: ' . $qrCode->getContentType());
-        echo $qrCode->writeString();
-
-        // Save it to a file
-        // $qrCode->writeFile(__DIR__ . '/qrcode.png');
-
-        // $response = new QrCodeResponse($qrCode);
-        die();
+        return $qrCode;
     }
 }
