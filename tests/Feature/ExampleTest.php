@@ -14,7 +14,7 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $op = GenerateQrUrl::qrCode('http://m.baidu.com', 400, __DIR__ . '/../../storage/result.png');
+        $op = GenerateQrUrl::qrCode('http://m.baidu.com', 400, __DIR__ . '/../../storage/WechatIMG2.480x480.jpg');
 
         $op->writeFile(__DIR__ . '/../../storage/test.png');
     }
