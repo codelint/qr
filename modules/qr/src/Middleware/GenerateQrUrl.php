@@ -5,6 +5,7 @@ use Endroid\QrCode\ErrorCorrectionLevel;
 use Endroid\QrCode\Exception\InvalidPathException;
 use Endroid\QrCode\QrCode;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -32,10 +33,26 @@ class GenerateQrUrl {
 
         if($logo = request()->get('logo'))
         {
-            $logo = public_path('img/') . $logo;
+            $logo_path = public_path('img/') . $logo;
+
+            if (!file_exists($logo_path))
+            {
+                try
+                {
+                    $uri = base64_decode($logo);
+                    if (Str::startsWith($uri, 'http'))
+                    {
+                        file_put_contents(storage_path('qr.tmp'), file_get_contents($uri));
+                        $logo_path = storage_path('qr.tmp');
+                    }
+                } catch (\Exception $e)
+                {
+                    //todo
+                }
+            }
         }
 
-        $qrCode = static::qrCode($url, $size, $logo);
+        $qrCode = static::qrCode($url, $size, $logo_path);
 
         header('Content-Type: ' . $qrCode->getContentType());
         echo $qrCode->writeString();
