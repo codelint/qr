@@ -31,6 +31,7 @@ class GenerateQrUrl {
         $url = 'http://' . $domain . $url . '?' . http_build_query(Arr::except($get, ['qr_size']));
         //include_once(app_path('library/phpqrcode/phpqrcode.php'));
 
+        $logo_path = null;
         if($logo = request()->get('logo'))
         {
             $logo_path = public_path('img/') . $logo;
@@ -62,7 +63,8 @@ class GenerateQrUrl {
 
     /**
      * @param $url
-     * @param $size
+     * @param int $size
+     * @param string $logo_path
      * @return QrCode
      */
     static public function qrCode($url, $size = 400, $logo_path = '')
