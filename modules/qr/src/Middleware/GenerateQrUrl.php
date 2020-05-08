@@ -28,8 +28,15 @@ class GenerateQrUrl {
         $url = Str::startsWith($url, '/') ? $url : "/$url";
         $url = explode('?', $url);
         $url = $url[0];
-        $url = 'http://' . $domain . $url . '?' . http_build_query(Arr::except($get, ['qr_size']));
-        //include_once(app_path('library/phpqrcode/phpqrcode.php'));
+
+        if (isset($get['type']) && $get['type'] == 'text')
+        {
+            $url = substr($url, Str::startsWith($url,'/') ? 3 : 4);
+        }
+        else
+        {
+            $url = 'http://' . $domain . $url . '?' . http_build_query(Arr::except($get, ['qr_size']));
+        }
 
         $logo_path = null;
         if($logo = request()->get('logo'))
